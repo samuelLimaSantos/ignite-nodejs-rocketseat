@@ -4,6 +4,9 @@
   "username": "postgres",
   "password": "docker",
   "database": "rentx",
+  "entities": [
+    "./src/modules/**/entities/*.ts"
+  ],
   "migrations": [
     "./src/database/migrations/*.ts"
   ],

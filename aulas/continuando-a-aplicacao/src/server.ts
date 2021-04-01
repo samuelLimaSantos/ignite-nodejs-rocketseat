@@ -1,5 +1,6 @@
 import "./database";
 import "reflect-metadata";
+import "./shared/container";
 import express from "express";
 import swaggerApi from "swagger-ui-express";
 
