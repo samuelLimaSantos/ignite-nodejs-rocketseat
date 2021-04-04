@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-import { Category } from "../../entities/Category";
-import { CategoryRepository } from "../../repositories/implementations/CategoriesRepository";
+import { Category } from "@modules/cars/infra/typeorm/entities/Category";
+import { CategoryRepository } from "@modules/cars/infra/typeorm/repositories/CategoriesRepository";
 
 @injectable()
 class ListCategoriesUseCase {

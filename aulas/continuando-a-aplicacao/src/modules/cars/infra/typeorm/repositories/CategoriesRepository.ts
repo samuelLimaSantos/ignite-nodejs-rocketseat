@@ -1,10 +1,11 @@
 import { getRepository, Repository } from "typeorm";
 
-import { Category } from "../../entities/Category";
+import { Category } from "@modules/cars/infra/typeorm/entities/Category";
+
 import {
   ICategoryRepository,
   ICreateCategoryDTO,
-} from "../ICategoriesRepository";
+} from "../../../repositories/ICategoriesRepository";
 
 class CategoryRepository implements ICategoryRepository {
   private repository: Repository<Category>;
