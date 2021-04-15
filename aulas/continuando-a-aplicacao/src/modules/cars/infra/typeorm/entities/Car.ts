@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryColumn,
 } from "typeorm";
@@ -42,7 +43,7 @@ class Car {
   @JoinColumn({ name: "category_id" })
   category: Category;
 
-  @ManyToOne(() => Specification)
+  @ManyToMany(() => Specification)
   @JoinTable({
     name: "specifications_cars",
     joinColumns: [{ name: "car_id" }], // Coluna da tabela estrangeira que faz referencia a esta classe
