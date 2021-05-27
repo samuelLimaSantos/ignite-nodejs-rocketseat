@@ -11,6 +11,7 @@ class CarsRepository implements ICarsRepository {
   constructor() {
     this.repository = getRepository(Car);
   }
+
   findAll(): Promise<Car[]> {
     throw new Error("Method not implemented.");
   }
@@ -74,6 +75,16 @@ class CarsRepository implements ICarsRepository {
     const car = await this.repository.findOne(id);
 
     return car;
+  }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    await this.repository
+      .createQueryBuilder()
+      .update()
+      .set({ available })
+      .where("id = :id")
+      .setParameters({ id })
+      .execute();
   }
 }
 
