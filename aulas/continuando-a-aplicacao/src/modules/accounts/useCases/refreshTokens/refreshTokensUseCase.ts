@@ -1,5 +1,5 @@
 import { verify, sign } from "jsonwebtoken";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import auth from "@config/auth";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUserTokens";
@@ -11,6 +11,7 @@ interface IPayload {
   email: string;
 }
 
+@injectable()
 export class RefreshTokenUseCase {
   constructor(
     @inject("UsersTokensRepository")
@@ -23,8 +24,8 @@ export class RefreshTokenUseCase {
     const { sub, email } = verify(token, auth.secret_refresh_token) as IPayload;
 
     const userToken = await this.usersTokensRepository.findByUserIdAndToken(
-      sub,
-      token
+      token,
+      sub
     );
 
     if (!userToken) {

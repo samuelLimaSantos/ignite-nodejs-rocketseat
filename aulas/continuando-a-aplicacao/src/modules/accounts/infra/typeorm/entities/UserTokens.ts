@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
 } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
@@ -18,12 +19,12 @@ export class UserTokens {
   @Column()
   refresh_token: string;
 
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  user: User;
+
   @Column()
   user_id: string;
-
-  @ManyToOne(() => User)
-  @JoinColumn({ name: "user_id" })
-  user: User;
 
   @Column()
   expires_date: Date;
