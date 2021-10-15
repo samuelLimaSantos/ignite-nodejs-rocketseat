@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
 import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokensRepository";
 import { DateProvider } from "@shared/container/providers/DateProvider/implementations/DateProvider";
+import { EtherealMailProvider } from "@shared/container/providers/MailProvider/implementations/EtherealMailProvider";
 import { AppErrors } from "@shared/errors/AppErrors";
 
 @injectable()
@@ -14,7 +15,9 @@ export class SendForgotPasswordMailUseCase {
     @inject("UsersTokensRepository")
     private usersTokensRepository: UsersTokensRepository,
     @inject("DateProvider")
-    private dateProvider: DateProvider
+    private dateProvider: DateProvider,
+    @inject("MailProvider")
+    private mailProvider: EtherealMailProvider
   ) {}
 
   async execute(email: string): Promise<void> {
@@ -33,5 +36,11 @@ export class SendForgotPasswordMailUseCase {
       refresh_token: token,
       expires_date,
     });
+
+    await this.mailProvider.sendMail(
+      email,
+      "Recuperação de senha",
+      "Recupere a sua senha já"
+    );
   }
 }
