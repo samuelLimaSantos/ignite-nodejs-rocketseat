@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuid } from "uuid";
 
@@ -37,10 +38,25 @@ export class SendForgotPasswordMailUseCase {
       expires_date,
     });
 
+    const variables = {
+      name: user.name,
+      link: `${process.env.EMAIL_TEMPLATE_URL}${token}`,
+    };
+
+    const filePath = resolve(
+      __dirname,
+      "..",
+      "..",
+      "views",
+      "emails",
+      "forgotPassword.hbs"
+    );
+
     await this.mailProvider.sendMail(
       email,
-      "Recuperação de senha",
-      "Recupere a sua senha já"
+      "Recuperação de Senha",
+      variables,
+      filePath
     );
   }
 }
