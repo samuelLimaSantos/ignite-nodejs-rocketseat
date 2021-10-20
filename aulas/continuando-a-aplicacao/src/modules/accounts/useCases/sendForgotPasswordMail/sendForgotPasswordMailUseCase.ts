@@ -2,23 +2,23 @@ import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuid } from "uuid";
 
-import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
-import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokensRepository";
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUserTokens";
 import { DateProvider } from "@shared/container/providers/DateProvider/implementations/DateProvider";
-import { EtherealMailProvider } from "@shared/container/providers/MailProvider/implementations/EtherealMailProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/IMailProvider";
 import { AppErrors } from "@shared/errors/AppErrors";
 
 @injectable()
 export class SendForgotPasswordMailUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: UsersRepository,
+    private usersRepository: IUsersRepository,
     @inject("UsersTokensRepository")
-    private usersTokensRepository: UsersTokensRepository,
+    private usersTokensRepository: IUsersTokensRepository,
     @inject("DateProvider")
     private dateProvider: DateProvider,
     @inject("MailProvider")
-    private mailProvider: EtherealMailProvider
+    private mailProvider: IMailProvider
   ) {}
 
   async execute(email: string): Promise<void> {
